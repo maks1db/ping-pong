@@ -1,7 +1,7 @@
 {
   "name": "ping-pong",
   "version": "1.0.0",
-  "description": "",
+  "description": "Воркшоп по созданию игры ping-pong",
   "main": "index.js",
   "scripts": {
     "start": "rimraf public/* && cd ./packages/frontend && yarn start",
