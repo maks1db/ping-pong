@@ -1,0 +1,1 @@
+export { MainPlayer } from "./view";
