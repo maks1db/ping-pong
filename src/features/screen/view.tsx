@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
+import { Button } from "../../shared/ui/button";
 
 export const Screen: FC<{ className?: string }> = ({ className }) => {
   return (
@@ -7,19 +8,17 @@ export const Screen: FC<{ className?: string }> = ({ className }) => {
       <div className="center-line"></div>
       <canvas id="gameCanvas" className="w-full h-full"></canvas>
 
-      <div
-        id="startScreen"
-        className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-70"
-      >
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-70">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 glow text-white">
           ПИНГ ПОНГ
         </h2>
-        <button
-          id="startButton"
-          className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold text-lg pulse"
-        >
-          СТАРТ
-        </button>
+
+        <Button
+          title="Старт"
+          variant="blue"
+          iconName="play"
+          className="w-44 text-lg"
+        />
         <div className="mt-8 text-sm text-gray-400">
           <p>Набравший 5 очков побеждает!</p>
         </div>

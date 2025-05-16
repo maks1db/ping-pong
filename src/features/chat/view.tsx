@@ -1,5 +1,8 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
+import { GroupTitle } from "../../shared/ui/group-title";
+import { Button } from "../../shared/ui/button";
+import { Input } from "../../shared/ui/input";
 
 export const Chat: FC<{ className?: string }> = ({ className }) => {
   return (
@@ -9,21 +12,22 @@ export const Chat: FC<{ className?: string }> = ({ className }) => {
         className,
       )}
     >
-      <h2 className="text-xl font-semibold mb-4 border-b border-gray-700 pb-2 flex items-center gap-4">
-        <i className="fas fa-comments"></i> <span>Чат</span>
-      </h2>
+      <GroupTitle title="Чат" iconName="comments" className="mb-4" />
 
       <div className="h-40 overflow-y-auto bg-slate-500 rounded px-2.5 text-white bg-opacity-30"></div>
-      <input
-        type="text"
-        id="chatInput"
-        className=" bg-gray-700 border border-gray-600 rounded px-3 py-2 mt-2"
-        placeholder="Сообщение..."
-      ></input>
-      <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mt-2 flex items-center justify-center gap-4">
-        <i className="fas fa-paper-plane"></i>
-        <span>Отправить</span>
-      </button>
+
+      <Input
+        label="Сообщение"
+        placeholder="Введите сообщение..."
+        className="mt-2"
+      />
+
+      <Button
+        title="Отправить"
+        variant="blue"
+        iconName="paper-plane"
+        className="mt-2"
+      />
     </div>
   );
 };

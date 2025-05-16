@@ -1,0 +1,1 @@
+export { GroupTitle } from "./view";
