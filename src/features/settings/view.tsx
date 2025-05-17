@@ -4,8 +4,15 @@ import { Button } from "../../shared/ui/button";
 import { Input } from "../../shared/ui/input";
 import { GroupTitle } from "../../shared/ui/group-title";
 import { Select } from "../../shared/ui/select";
+import { useEffectRunner, useSubscriptionRef } from "../../shared/effect-react";
+import {
+  settingsRef,
+  SettingsStore,
+  SettingsStoreType,
+} from "../../shared/store/settings";
+import { Effect } from "effect";
 
-export const Settings: FC<SettingsProps> = ({ className }) => {
+export const Settings: FC<BaseProps> = ({ className }) => {
   return (
     <div
       className={twMerge(
@@ -14,9 +21,10 @@ export const Settings: FC<SettingsProps> = ({ className }) => {
       )}
     >
       <GroupTitle title="Настройки" className="mb-4" iconName="cogs" />
-      <Input label="Ваше имя" value={"Игрок"} className="mb-4" />
 
-      <Select className="mb-4" label="Тип подключения" options={options} />
+      <PlayerName className="mb-4" />
+      {/* <Select className="mb-4" label="Тип подключения" options={options} /> */}
+      <ConnectionType className="mb-4" />
 
       <div className="mb-4 flex flex-col">
         <Input label="Код подключения" readOnly />
@@ -56,11 +64,57 @@ export const Settings: FC<SettingsProps> = ({ className }) => {
   );
 };
 
-const options = [
-  { value: "offerer", name: "Создать игру" },
-  { value: "answerer", name: "Присоединиться" },
-];
+const PlayerName: FC<BaseProps> = ({ className }) => {
+  const playerName = useSubscriptionRef(settingsRef, (s) => s.playerName);
+  const runner = useEffectRunner();
 
-interface SettingsProps {
+  return (
+    <Input
+      label="Ваше имя"
+      value={playerName}
+      onChange={(e) => {
+        runner(
+          SettingsStore.pipe(
+            Effect.flatMap((s) => s.setPlayerName(e.target.value)),
+          ),
+        );
+      }}
+      className={className}
+      placeholder="Ваше имя..."
+    />
+  );
+};
+
+const ConnectionType: FC<BaseProps> = ({ className }) => {
+  const type = useSubscriptionRef(settingsRef, (s) => s.connectionType);
+  const runner = useEffectRunner();
+  return (
+    <Select
+      className={className}
+      label="Тип подключения"
+      options={options}
+      value={type}
+      onChange={(e) => {
+        runner(
+          SettingsStore.pipe(
+            Effect.flatMap((s) =>
+              s.changeConnectionType(
+                e.target.value as SettingsStoreType["connectionType"],
+              ),
+            ),
+          ),
+        );
+      }}
+    />
+  );
+};
+
+const options: [{ value: SettingsStoreType["connectionType"]; name: string }] =
+  [
+    { value: "offerer", name: "Создать игру" },
+    { value: "answerer", name: "Присоединиться" },
+  ];
+
+interface BaseProps {
   className?: string;
 }

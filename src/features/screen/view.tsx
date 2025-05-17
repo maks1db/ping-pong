@@ -17,7 +17,7 @@ export const Screen: FC<{ className?: string }> = ({ className }) => {
           title="Старт"
           variant="blue"
           iconName="play"
-          className="w-44 text-lg"
+          className="w-min text-lg"
         />
         <div className="mt-8 text-sm text-gray-400">
           <p>Набравший 5 очков побеждает!</p>

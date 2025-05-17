@@ -7,7 +7,6 @@ export const Input: FC<InputProps> = ({ className, label, ...rest }) => {
       <input
         type="text"
         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2"
-        placeholder="Вставьте код здесь"
         {...rest}
       ></input>
     </div>
