@@ -23,12 +23,11 @@ export const Settings: FC<BaseProps> = ({ className }) => {
       <GroupTitle title="Настройки" className="mb-4" iconName="cogs" />
 
       <PlayerName className="mb-4" />
-      {/* <Select className="mb-4" label="Тип подключения" options={options} /> */}
       <ConnectionType className="mb-4" />
 
       <div className="mb-4 flex flex-col">
         <Input label="Код подключения" readOnly />
-
+        <OfferCode />
         <Button
           iconName="copy"
           variant="yellow"
@@ -64,6 +63,18 @@ export const Settings: FC<BaseProps> = ({ className }) => {
   );
 };
 
+const OfferCode: FC<BaseProps> = ({ className }) => {
+  const code = useSubscriptionRef(settingsRef, (s) => s.offerCode);
+  return (
+    <Input
+      label="Код подключения"
+      readOnly
+      value={code}
+      className={className}
+    />
+  );
+};
+
 const PlayerName: FC<BaseProps> = ({ className }) => {
   const playerName = useSubscriptionRef(settingsRef, (s) => s.playerName);
   const runner = useEffectRunner();
@@ -71,6 +82,7 @@ const PlayerName: FC<BaseProps> = ({ className }) => {
   return (
     <Input
       label="Ваше имя"
+      id="name"
       value={playerName}
       onChange={(e) => {
         runner(
@@ -109,7 +121,7 @@ const ConnectionType: FC<BaseProps> = ({ className }) => {
   );
 };
 
-const options: [{ value: SettingsStoreType["connectionType"]; name: string }] =
+const options: { value: SettingsStoreType["connectionType"]; name: string }[] =
   [
     { value: "offerer", name: "Создать игру" },
     { value: "answerer", name: "Присоединиться" },

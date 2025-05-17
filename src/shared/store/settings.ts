@@ -11,12 +11,23 @@ export class SettingsStore extends Effect.Service<SettingsStore>()(
       });
       return {
         setPlayerName: (name: string) =>
-          SubscriptionRef.update(ref, (s) => ({ ...s, playerName: name })),
+          SubscriptionRef.update(ref, (s) => {
+            s.playerName = name;
+            return s;
+          }),
         setOfferCode: (code: string) =>
-          ref.pipe(SubscriptionRef.update((s) => ({ ...s, offerCode: code }))),
+          ref.pipe(
+            SubscriptionRef.update((s) => {
+              s.offerCode = code;
+              return s;
+            }),
+          ),
         changeConnectionType: (type: SettingsStoreType["connectionType"]) =>
           ref.pipe(
-            SubscriptionRef.update((s) => ({ ...s, connectionType: type })),
+            SubscriptionRef.update((s) => {
+              s.connectionType = type;
+              return s;
+            }),
           ),
         ref,
       };
